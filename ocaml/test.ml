@@ -80,6 +80,18 @@ let trees_test = "test suite for trees" >::: [
     (fun _ ->
       assert_equal (Br ((1, "one"), Lf, Br ((2, "two"), Lf, Lf))) (combine (Br ((1, "one"), Lf, Lf)) (Br ((2, "two"), Lf, Lf)));
     );
+  "map_test" >::
+    (fun _ ->
+      assert_equal (map (fun x -> x + 2) Lf)  (Lf);
+      assert_equal (map (fun x -> x + 2) (Br (1, Lf, Lf))) (Br (3, Lf, Lf));
+      assert_equal (map (fun x -> x + 2) (Br (1, Lf, Br (1, Lf, Lf)))) (Br (3, Lf, Br (3, Lf, Lf)));
+    );
+  "fold_test" >::
+    (fun _ ->
+      assert_equal (fold 0 (fun x l r -> x + l + r) Lf) 0;
+      assert_equal (fold 0 (fun x l r -> x + l + r) (Br (1, Lf, Lf))) 1;
+      assert_equal (fold 0 (fun x l r -> x + l + r) (Br (1, Lf, Br (1, Lf, Lf)))) 2;
+    );
 ]
 
 let sort_test name sort =

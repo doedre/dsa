@@ -60,3 +60,12 @@ let rec combine tr tr' =
   | Lf -> tr
   | Br ((k, v), l, r) -> combine (insert (combine tr l) k v) r
 
+
+let rec map f = function
+  | Lf -> Lf
+  | Br (v, l, r) -> Br (f v, map f l, map f r)
+
+let rec fold acc f = function
+  | Lf -> acc
+  | Br (v, l, r) -> f v (fold acc f l) (fold acc f r)
+
