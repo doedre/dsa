@@ -3,6 +3,7 @@ open Lists
 open Trees
 open Insertion_sort
 open Merge_sort
+open Matrix
 
 let rec is_sorted cmp = function
   | [] -> true
@@ -94,6 +95,30 @@ let trees_test = "test suite for trees" >::: [
     );
 ]
 
+let matrix_test = "test suite for matrices" >::: [
+  "is_valid_matrix_test" >::
+    (fun _ ->
+      assert_equal (is_valid_matrix [[]]) false;
+      assert_equal (is_valid_matrix [[1; 100; 1000]]) true;
+      assert_equal (is_valid_matrix [[1; 100; 1000]; [2; 200]; [3; 300; 300]]) false;
+      assert_equal (is_valid_matrix [[100]; [10]; [1]]) true;
+      assert_equal (is_valid_matrix [[100]; [1; 10]]) false;
+    );
+  "row_vector_addition_test" >::
+    (fun _ ->
+      assert_equal (add_row_vectors [1; 2; 3] [10; 20; 30]) [11; 22; 33];
+      assert_equal (add_row_vectors [] []) [];
+    );
+  "add_matrices_test" >::
+    (fun _ ->
+      assert_equal (add_matrices [[1; 2]; [10; 20]] [[3; 4]; [30; 40]]) [[4; 6]; [40; 60]];
+    );
+  "mul_matrices_test" >::
+    (fun _ ->
+      assert_equal (mul_matrices [[1; 2]; [3; 4]] [[10; 20]; [30; 40]]) [[70; 100]; [150; 220]];
+    );
+]
+
 let sort_test name sort =
   name >::: [
     "empty_list" >:: (fun _ -> assert_equal [] (sort ( <= )[]));
@@ -112,4 +137,5 @@ let _ = run_test_tt_main lists_test
 let _ = run_test_tt_main trees_test
 let _ = run_test_tt_main insertion_sort_test
 let _ = run_test_tt_main merge_sort_test
+let _ = run_test_tt_main matrix_test
 
